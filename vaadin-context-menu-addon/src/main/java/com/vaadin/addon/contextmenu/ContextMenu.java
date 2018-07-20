@@ -18,6 +18,7 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.event.ContextClickEvent.ContextClickNotifier;
 import com.vaadin.server.AbstractExtension;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ResourceReference;
 import com.vaadin.shared.MouseEventDetails;
@@ -157,8 +158,10 @@ public class ContextMenu extends AbstractExtension implements Menu {
             menuItemState.description = item.getDescription();
             menuItemState.enabled = item.isEnabled();
             menuItemState.separator = item.isSeparator();
-            menuItemState.icon = ResourceReference.create(item.getIcon(), this,
-                    "");
+            if(item.getIcon() != null) {
+              menuItemState.icon = ResourceReference.create(item.getIcon(), this, "");
+              getState().resources.put(menuItemState.icon.getURL(), menuItemState.icon);
+            }
             menuItemState.styleName = item.getStyleName();
 
             menuItemState.childItems = convertItemsToState(item.getChildren());

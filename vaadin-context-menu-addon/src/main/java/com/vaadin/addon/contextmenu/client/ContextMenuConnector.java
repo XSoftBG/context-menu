@@ -138,30 +138,29 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
             boolean htmlContentAllowed, ApplicationConnection connection) {
         // Construct html from the text and the optional icon
         StringBuffer itemHTML = new StringBuffer();
-        if (state.separator) {
-            itemHTML.append("<span>---</span>");
-        } else {
-            // Add submenu indicator
-            if (state.childItems != null && state.childItems.size() > 0) {
-                itemHTML.append(
-                        "<span class=\"v-menubar-submenu-indicator\">&#x25BA;</span>");
-            }
+        if (!state.separator) 
+        {
+          // Add submenu indicator
+          if (state.childItems != null && state.childItems.size() > 0) {
+              itemHTML.append(
+                      "<span class=\"v-menubar-submenu-indicator\">&#x25BA;</span>");
+          }
 
-            itemHTML.append("<span class=\"v-menubar-menuitem-caption\">");
+          itemHTML.append("<span id=menuitem-").append(state.id).append(" class=\"v-menubar-menuitem-caption\">");
 
-            if (state.icon != null) {
-                Icon icon = connection.getIcon(state.icon.getURL());
-                if (icon != null) {
-                    itemHTML.append(icon.getElement().getString());
-                }
-            }
+          if (state.icon != null) {
+              Icon icon = connection.getIcon(state.icon.getURL());
+              if (icon != null) {
+                  itemHTML.append(icon.getElement().getString());
+              }
+          }
 
-            String itemText = state.text;
-            if (!htmlContentAllowed) {
-                itemText = WidgetUtil.escapeHTML(itemText);
-            }
-            itemHTML.append(itemText);
-            itemHTML.append("</span>");
+          String itemText = state.text;
+          if (!htmlContentAllowed) {
+              itemText = WidgetUtil.escapeHTML(itemText);
+          }
+          itemHTML.append(itemText);
+          itemHTML.append("</span>");
         }
         return itemHTML.toString();
     }

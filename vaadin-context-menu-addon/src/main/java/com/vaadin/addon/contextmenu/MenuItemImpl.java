@@ -3,7 +3,6 @@ package com.vaadin.addon.contextmenu;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import com.vaadin.addon.contextmenu.Menu.Command;
 import com.vaadin.server.Resource;
@@ -16,7 +15,8 @@ import com.vaadin.server.Resource;
  */
 @SuppressWarnings("serial")
 class MenuItemImpl implements Serializable, MenuItem {
-
+  
+    public static int next_id = 0;
     /** Private members * */
     private final int itsId;
     private Command itsCommand;
@@ -67,8 +67,7 @@ class MenuItemImpl implements Serializable, MenuItem {
     }
 
     protected int getNextId() {
-        // FIXME is this good enough? maybe just random?
-        return UUID.randomUUID().hashCode();
+        return next_id++;
     }
 
     /*
